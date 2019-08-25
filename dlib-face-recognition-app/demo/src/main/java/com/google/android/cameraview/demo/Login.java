@@ -44,11 +44,15 @@ public class Login extends AppCompatActivity {
                                            if (index==1){
                                                if(str_capcha.equals("Rt2Qd")){
                                                    Toast.makeText(getApplication(),"Username and password match", Toast.LENGTH_SHORT).show();
+                                               }else{
+                                                   Toast.makeText(getApplication(),"Username and password no match", Toast.LENGTH_SHORT).show();
                                                }
                                            }
                                            else{
                                                if(str_capcha.equals("W87NA")){
                                                    Toast.makeText(getApplication(),"Username and password match", Toast.LENGTH_SHORT).show();
+                                               }else{
+                                                   Toast.makeText(getApplication(),"Username and password no match", Toast.LENGTH_SHORT).show();
                                                }
                                            }
 

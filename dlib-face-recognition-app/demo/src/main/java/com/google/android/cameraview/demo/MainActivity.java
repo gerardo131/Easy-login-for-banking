@@ -23,7 +23,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -32,6 +31,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,6 +53,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.cameraview.CameraView;
@@ -65,6 +67,8 @@ import junit.framework.Assert;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 // This demo app uses dlib face recognition based on resnet
@@ -97,6 +101,11 @@ public class MainActivity extends AppCompatActivity implements
     private CameraView mCameraView;
 
     private Handler mBackgroundHandler;
+    private ImageView Mascara;
+    private Button fab;
+
+
+
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -104,7 +113,11 @@ public class MainActivity extends AppCompatActivity implements
             switch (v.getId()) {
                 case R.id.take_picture:
                     if (mCameraView != null) {
+                        Mascara.setVisibility( View.VISIBLE);
+
+
                         mCameraView.takePicture();
+
                     }
                     break;
                 /*
@@ -122,16 +135,25 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate called");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView( R.layout.activity_main1);
         checkPermissions();
 
-        mCameraView = (CameraView) findViewById(R.id.camera);
+        mCameraView = (CameraView) findViewById( R.id.camera );
+
+        Mascara = (ImageView) findViewById( R.id.imageView );
+        Mascara.setVisibility( View.VISIBLE);
+
+        //capcha.setBackgroundDrawable(null);
+
+
         if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
         }
-        Button fab = (Button) findViewById(R.id.take_picture);
+
+        fab = (Button) findViewById(R.id.take_picture);
         if (fab != null) {
             fab.setOnClickListener(mOnClickListener);
+
         }
         /*
         Button add_person = (Button) findViewById(R.id.add_person);
@@ -326,10 +348,11 @@ public class MainActivity extends AppCompatActivity implements
                 if (i!=names.size()-1) msg+=", ";
             }
             msg+=" found!";
+            Intent intent = new Intent(this, Login.class);
+            startActivityForResult(intent,0);
         }
 
-        Intent intent = new Intent(this, Login.class);
-        startActivityForResult(intent,0);
+
 
         return msg;
     }
